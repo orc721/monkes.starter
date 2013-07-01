@@ -1,0 +1,27 @@
+{
+  "name": "football",
+  "version": "0.0.1",
+  "title": "football.js",
+  "description": "Football (soccer) widget - matchday, today's rounds, team of the day, etc.",
+  "keywords": [
+    "football",
+    "widget",
+    "soccer"
+  ],
+  "author": {
+    "name": "Gerald Bauer",
+    "url": "https://github.com/geraldb"
+  },
+  "licenses": [
+    {
+      "type": "Public Domain",
+      "url": "http://en.wikipedia.org/wiki/Public_domain"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.10"
+  },
+  "homepage": "https://github.com/geraldb/football.js",
+  "docs": "https://github.com/geraldb/football.js",
+  "download": "http://code.jquery.com/#football"
+}
