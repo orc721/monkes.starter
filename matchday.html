@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>Matchday Example / sport.db JSON(P) API</title>
+  
+  <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+  <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+  <!-- download libs and include ??? why? why not?? -->
+</head>
+<body>
+
+
+
+<script type="text/html" id='widgetTpl'>
+<h3>
+ <%= data.event.title %>
+   -
+ <%= data.round.title %>
+</h3>
+ 
+<ul>
+ <% _.each( data.games, function( game, index ) { %>
+   <li>
+     <%= game.play_at %> |
+     <%= game.team1_title %> (<%= game.team1_code %>)
+
+      <% if( game.score1 != null && game.score2 != null ) { %>
+        <% if( game.score1ot != null && game.score2ot != null ) { %>
+          <% if ( game.score1p != null && game.score2p != null ) { %>
+             <%= game.score1p %> - <%= game.score2p %> iE /
+          <% } %>
+          <%= game.score1ot %> - <%= game.score2ot %> nV /
+        <% } %>
+        <%= game.score1 %> - <%= game.score2 %>
+      <% } else { %>
+        - 
+      <% } %>
+
+      <%= game.team2_title %> (<%= game.team2_code %>)
+   </li>
+  <% }); %>
+</ul>
+</script>
+
+<script>
+var sportdb_widget_new = function( widget_id, tpl_id, api_path_prefix ) {
+  
+  var _api_path_prefix = '';
+  var _$widget;
+  var _$tpl;
+  
+  function _init( widget_id, tpl_id, api_path_prefix )
+  {
+    _api_path_prefix = api_path_prefix;
+    _$widget  = $( widget_id );
+    _tpl      = $( tpl_id ).html();   // todo: check if it returns jquery object or just plain js{    
+  }
+
+  function _update( event_key, round_pos )
+  {
+    var api_link = _api_path_prefix + "/event/" + event_key + "/round/" + round_pos + "?callback=?"; 
+    
+    $.getJSON( api_link, function(json) {
+    
+      var snippet = _.template( _tpl, {data:json} );
+      _$widget.html( snippet );
+    });  // getJSON
+  }  // fn _update
+
+  // call "c'tor/constructor"
+  _init( widget_id, tpl_id, api_path_prefix );
+
+  // return/export public api
+  return {
+     update: _update
+  }
+} // fn sportdb_widget_new
+</script>
+
+
+
+<h1>Matchday Example / sport.db JSON(P) API</h1>
+
+<p>
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '1' ); return false;">1</a> |
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '2' ); return false;">2</a> |
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '3' ); return false;">3</a> |
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '4' ); return false;">4</a> |
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '5' ); return false;">5</a> |
+   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '6' ); return false;">6</a>
+</p>
+
+<div id='widget'></div>
+
+<script>
+  var sportdb_widget = sportdb_widget_new( '#widget', '#widgetTpl', 'http://footballdb.herokuapp.com/api/v1' );
+  sportdb_widget.update( 'euro.2012', '1' );  // todo: put into document ready ?? 
+</script>
+
+</body>
+</html>
