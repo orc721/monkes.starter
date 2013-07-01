@@ -4,27 +4,29 @@
   <meta charset='UTF-8'>
   <title>Matchday Example / sport.db JSON(P) API</title>
   
-  <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-  <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-  <!-- download libs and include ??? why? why not?? -->
-</head>
-<body>
+  <script src='js/3rd/jquery-2.0.2.min.js'></script>
+  <script src='js/3rd/underscore-1.4.4.min.js'></script>
+  
+  <script src='js/jquery.football.js'></script>
 
-
-
-<script type="text/html" id='widgetTpl'>
+  <script type='text/html' id='widgetTpl'>
 <h3>
  <%= data.event.title %>
    -
  <%= data.round.title %>
 </h3>
  
-<ul>
+<table>
  <% _.each( data.games, function( game, index ) { %>
-   <li>
-     <%= game.play_at %> |
-     <%= game.team1_title %> (<%= game.team1_code %>)
+   <tr>
+     <td>
+      <%= game.play_at %>
+     </td>
+     <td style='text-align: right;'> 
+       <%= game.team1_title %> (<%= game.team1_code %>)
+     </td>
 
+     <td>
       <% if( game.score1 != null && game.score2 != null ) { %>
         <% if( game.score1ot != null && game.score2ot != null ) { %>
           <% if ( game.score1p != null && game.score2p != null ) { %>
@@ -36,48 +38,39 @@
       <% } else { %>
         - 
       <% } %>
-
+     </td>
+     <td>
       <%= game.team2_title %> (<%= game.team2_code %>)
-   </li>
+     </td>
+   </tr>
   <% }); %>
-</ul>
+</table>
 </script>
 
-<script>
-var sportdb_widget_new = function( widget_id, tpl_id, api_path_prefix ) {
-  
-  var _api_path_prefix = '';
-  var _$widget;
-  var _$tpl;
-  
-  function _init( widget_id, tpl_id, api_path_prefix )
-  {
-    _api_path_prefix = api_path_prefix;
-    _$widget  = $( widget_id );
-    _tpl      = $( tpl_id ).html();   // todo: check if it returns jquery object or just plain js{    
-  }
+  <script>
+    $(document).ready( function() {
+      // NB: sportdb_widget make it global var (that is, we do NOT use var sportdb_widget)
+      sportdb_widget = sportdb_widget_new( '#widget', '#widgetTpl', 'http://footballdb.herokuapp.com/api/v1' );
+      sportdb_widget.update( 'euro.2012', '1' );  // todo: put into document ready ?? 
+    });
+  </script>
 
-  function _update( event_key, round_pos )
-  {
-    var api_link = _api_path_prefix + "/event/" + event_key + "/round/" + round_pos + "?callback=?"; 
+  <style>
     
-    $.getJSON( api_link, function(json) {
+    a {
+      color: black;
+      text-decoration: none;
+    }
     
-      var snippet = _.template( _tpl, {data:json} );
-      _$widget.html( snippet );
-    });  // getJSON
-  }  // fn _update
+    #widget {
+       /* background-color: lime; */
+       border: 1px solid green;
+       padding: 4px;
+    }
+  </style>
 
-  // call "c'tor/constructor"
-  _init( widget_id, tpl_id, api_path_prefix );
-
-  // return/export public api
-  return {
-     update: _update
-  }
-} // fn sportdb_widget_new
-</script>
-
+</head>
+<body>
 
 
 <h1>Matchday Example / sport.db JSON(P) API</h1>
@@ -92,11 +85,6 @@ var sportdb_widget_new = function( widget_id, tpl_id, api_path_prefix ) {
 </p>
 
 <div id='widget'></div>
-
-<script>
-  var sportdb_widget = sportdb_widget_new( '#widget', '#widgetTpl', 'http://footballdb.herokuapp.com/api/v1' );
-  sportdb_widget.update( 'euro.2012', '1' );  // todo: put into document ready ?? 
-</script>
 
 </body>
 </html>
