@@ -9,7 +9,21 @@
   
   <script src='js/jquery.football.js'></script>
 
-  <script type='text/html' id='widgetTpl'>
+  <style>
+    
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    
+    #widget, #widget2 {
+       /* background-color: lime; */
+       border: 1px solid green;
+       padding: 4px;
+    }
+  </style>
+  
+  <script type='text/template' id='widgetTpl'>
 <h3>
  <%= data.event.title %>
    -
@@ -50,24 +64,16 @@
   <script>
     $(document).ready( function() {
       // NB: sportdb_widget make it global var (that is, we do NOT use var sportdb_widget)
-      sportdb_widget = sportdb_widget_new( '#widget', '#widgetTpl', 'http://footballdb.herokuapp.com/api/v1' );
-      sportdb_widget.update( 'euro.2012', '1' );  // todo: put into document ready ?? 
+   
+      sportdb_widget = sportdb_widget_new( '#widget', { tplId: '#widgetTpl' } );
+      sportdb_widget.update( 'euro.2012', '1' );  
+
+      sportdb_widget2 = sportdb_widget_new( '#widget2' );
+      sportdb_widget2.update( 'de.2012_13', '1' );
+      
+      // $( '#widgetjq' ).football();
     });
   </script>
-
-  <style>
-    
-    a {
-      color: black;
-      text-decoration: none;
-    }
-    
-    #widget {
-       /* background-color: lime; */
-       border: 1px solid green;
-       padding: 4px;
-    }
-  </style>
 
 </head>
 <body>
@@ -85,6 +91,23 @@
 </p>
 
 <div id='widget'></div>
+
+<!-- try another widget -->
+
+<p>
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '1' ); return false;">1</a> |
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '2' ); return false;">2</a> |
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '3' ); return false;">3</a> |
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '4' ); return false;">4</a> |
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '5' ); return false;">5</a> |
+   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '6' ); return false;">6</a>
+</p>
+
+<div id='widget2'></div>
+
+<!-- try another widget -->
+
+<div id='widgetjq'></div>
 
 </body>
 </html>
