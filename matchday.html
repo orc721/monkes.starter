@@ -23,7 +23,44 @@
     }
   </style>
   
-  <script type='text/template' id='widgetTpl'>
+  <script>
+
+    function debug( msg ) {
+      if( window.console && window.console.log ) {
+        window.console.log( '[debug] '+msg );
+      }
+    }
+    
+    var sportdb_widget;
+    var sportdb_widget2;
+
+    $(document).ready( function() {
+      
+      debug( 'enter document.ready' );
+      
+      // NB: sportdb_widget make it global var (that is, we do NOT use var sportdb_widget)
+   
+      // fix: fetch_rounds!!! via service!!!! no need to specifiy!!
+   
+      sportdb_widget = sportdb_widget_new( '#widget',
+                                           { event: 'euro.2012',
+                                             rounds: ['1', '2', '3', '4', '5', '6' ]} );
+
+
+      sportdb_widget2 = sportdb_widget_new( '#widget2',
+                                            { event: 'de.2012_13',
+                                              rounds: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12' ],
+                                              tplId: '#widgetTpl'} );
+      
+      $( '#widgetjq' ).football( { event: 'euro.2012',
+                                   rounds: ['1', '2', '3', '4', '5', '6' ]} );
+    });
+  </script>
+
+</head>
+<body>
+
+<script type='text/template' id='widgetTpl'>
 <h3>
  <%= data.event.title %>
    -
@@ -61,47 +98,13 @@
 </table>
 </script>
 
-  <script>
-    $(document).ready( function() {
-      // NB: sportdb_widget make it global var (that is, we do NOT use var sportdb_widget)
-   
-      sportdb_widget = sportdb_widget_new( '#widget', { tplId: '#widgetTpl' } );
-      sportdb_widget.update( 'euro.2012', '1' );  
-
-      sportdb_widget2 = sportdb_widget_new( '#widget2' );
-      sportdb_widget2.update( 'de.2012_13', '1' );
-      
-      // $( '#widgetjq' ).football();
-    });
-  </script>
-
-</head>
-<body>
 
 
 <h1>Matchday Example / sport.db JSON(P) API</h1>
 
-<p>
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '1' ); return false;">1</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '2' ); return false;">2</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '3' ); return false;">3</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '4' ); return false;">4</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '5' ); return false;">5</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '6' ); return false;">6</a>
-</p>
-
 <div id='widget'></div>
 
 <!-- try another widget -->
-
-<p>
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '1' ); return false;">1</a> |
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '2' ); return false;">2</a> |
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '3' ); return false;">3</a> |
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '4' ); return false;">4</a> |
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '5' ); return false;">5</a> |
-   <a href="#" onclick="sportdb_widget2.update( 'de.2012_13', '6' ); return false;">6</a>
-</p>
 
 <div id='widget2'></div>
 
