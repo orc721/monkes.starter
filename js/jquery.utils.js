@@ -11,6 +11,15 @@ function debug( msg ) {
 ////////////////////////////
 // date utils
 
+function cmp_date( date1, date2 ) {
+   if( date1.getDate()     === date2.getDate()  &&
+       date1.getMonth()    === date2.getMonth()  &&
+       date1.getFullYear() === date2.getFullYear() )
+     return 0;
+   else
+     return 1;  // todo: return -1 or 1 if greater or smaller
+}
+
 
 var month_names = [
   'January',

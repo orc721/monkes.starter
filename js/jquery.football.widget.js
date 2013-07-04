@@ -4,11 +4,15 @@ var football_widget_new = function( id, opts ) {
   // 'use strict';
 
   var _$el;
-  var _$div1;   // used for rounds
-  var _$div2;   // used for round details (matches/games)
-  var _render_round;   // compiled underscore template - nb: it's just a js function
+  var _$div_event;    // used for event header 
+  var _$div_rounds;   // used for rounds
+  var _$div_games;    // used for round details (matches/games)
+
+  var _render_event; // compiled underscore templates - nb: it's just a js function
   var _render_rounds_long;
   var _render_rounds_short;
+  var _render_games;   
+
   var _api;
 
   var _defaults = {
@@ -16,7 +20,17 @@ var football_widget_new = function( id, opts ) {
               };
   var _settings;
 
-  var _def_tpl_rounds_long = "" +
+
+  var _tpl_event = "" +
+"<h3>" +
+" <%= data.event.title %>" +
+"   -  " +
+" <%= data.round.title %>" +
+"</h3>" +
+"";
+
+
+  var _tpl_rounds_long = "" +
 "    <% _.each( data.rounds, function( round, index ) { %>" +
 "" +
 "      <%  if( index > 0 ) { %>" +
@@ -31,7 +45,7 @@ var football_widget_new = function( id, opts ) {
 "";
 
 
-  var _def_tpl_rounds_short = "" +
+  var _tpl_rounds_short = "" +
 "    <% _.each( data.rounds, function( round, index ) { %>" +
 "" +
 "      <%  if( data.rounds.length/2 === index ) { %>" +
@@ -48,13 +62,7 @@ var football_widget_new = function( id, opts ) {
 "    <% }); %>" +
 "";
 
-  var _def_tpl_round = "" +
-"<h3>" +
-" <%= data.event.title %>" +
-"   -  " +
-" <%= data.round.title %>" +
-"</h3>" +
-""  +
+  var _tpl_games = "" +
 "<table>" +
 " <% _.each( data.games, function( game, index ) { %>" +
 "   <tr>" +
@@ -89,14 +97,6 @@ var football_widget_new = function( id, opts ) {
   
   function _init( id, opts )
   {
-     if( typeof id === 'string' ) {
-       debug( 'football_widget_new id: ' + id );
-     }
-     else
-     {
-       debug( 'football_widget_new w/ el' );
-     }
-    
      _settings = _.extend( {}, _defaults, opts );
 
      debug( 'tplId: ' + _settings.tplId );
@@ -115,26 +115,29 @@ var football_widget_new = function( id, opts ) {
 
      if( _settings.tplId == null ) {
       // use builtin template
-        tpl_str = _def_tpl_round;
+        tpl_str = _tpl_games;
      }
      else 
      { // use user specified/supplied template
        tpl_str = $( _settings.tplId ).html();
      }
 
-     _render_round  = _.template( tpl_str );
+     _render_games  = _.template( tpl_str );
      
-     _render_rounds_short = _.template( _def_tpl_rounds_short );
-     _render_rounds_long  = _.template( _def_tpl_rounds_long );
+     _render_event  = _.template( _tpl_event );
+     
+     _render_rounds_short = _.template( _tpl_rounds_short );
+     _render_rounds_long  = _.template( _tpl_rounds_long );
 
 
     _$el  = $( id );
     _$el.addClass( 'football-widget' );  // for styling add always .football-widget class
     
-    _$div1 = $( '<div />' );
-    _$div2 = $( '<div />' );
+    _$div_event  = $( '<div />' ).addClass( 'event' );
+    _$div_rounds = $( '<div />' ).addClass( 'rounds' );
+    _$div_games  = $( '<div />' ).addClass( 'games' );
     
-    _$el.append(  _$div1, _$div2 );
+    _$el.append(  _$div_event, _$div_rounds, _$div_games );
     
     _update_rounds();
 
@@ -157,11 +160,11 @@ var football_widget_new = function( id, opts ) {
       else
         snippet = _render_rounds_long( { data: json } );
 
-      _$div1.html( snippet );
+      _$div_rounds.html( snippet );
 
       // add click funs - assumes links with data-round='3' etc.
       // - todo/check: is there a better way to add click handlers in templates?
-      _$div1.find( 'a' ).click( function() {
+      _$div_rounds.find( 'a' ).click( function() {
         debug( 'click update round' );
         var $link = $(this);
         var round = $link.data( 'round' );
@@ -179,8 +182,11 @@ var football_widget_new = function( id, opts ) {
 
     _api.fetch_round( _settings.event, round_pos, function( json ) {
     
-      var snippet = _render_round( { data: json } );
-      _$div2.html( snippet );
+      var snippet = _render_games( { data: json } );
+      _$div_games.html( snippet );
+      
+      var snippet2 = _render_event( { data: json } );
+      _$div_event.html( snippet2 );
 
     }); 
   }  // fn _update
