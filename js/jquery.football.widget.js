@@ -1,24 +1,59 @@
 
 
 var sportdb_widget_new = function( id, opts ) {
-  
+  // 'use strict';
+
   var _$el;
-  var _$div1;
-  var _$div2;
+  var _$div1;   // used for rounds
+  var _$div2;   // used for round details (matches/games)
   var _render_round;   // compiled underscore template - nb: it's just a js function
+  var _render_rounds_long;
+  var _render_rounds_short;
   var _api;
 
   var _defaults = {
                 tplId: null
               };
   var _settings;
-  
+
 
   function _debug( msg ) {
       if( window.console && window.console.log ) {
         window.console.log( '[debug] '+msg );
       }
     }
+
+  var _def_tpl_rounds_long = "" +
+"    <% _.each( data.rounds, function( round, index ) { %>" +
+"" +
+"      <%  if( index > 0 ) { %>" +
+"        |" +
+"      <% } %>" +
+"" +
+"      <a href='#' data-round='<%= round.pos %>'>" +
+"        <%= round.title %>" +
+"      </a>" +
+"" +
+"    <% }); %>" +
+"";
+
+
+  var _def_tpl_rounds_short = "" +
+"    <% _.each( data.rounds, function( round, index ) { %>" +
+"" +
+"      <%  if( data.rounds.length/2 === index ) { %>" +
+"         <br>" +
+"      <% } else {" +
+"            if( index > 0 ) { %>" +
+"             |" +
+"      <% }} %>" +
+"" +
+"      <a href='#' data-round='<%= round.pos %>'>" +
+"        <%= round.pos %>" +
+"      </a>" +
+"" +
+"    <% }); %>" +
+"";
 
   var _def_tpl_round = "" +
 "<h3>" +
@@ -95,6 +130,10 @@ var sportdb_widget_new = function( id, opts ) {
      }
 
      _render_round  = _.template( tpl_str );
+     
+     _render_rounds_short = _.template( _def_tpl_rounds_short );
+     _render_rounds_long  = _.template( _def_tpl_rounds_long );
+
 
     _$el  = $( id );
     
@@ -102,44 +141,47 @@ var sportdb_widget_new = function( id, opts ) {
     _$div2 = $( '<div />' );
     _$el.append(  _$div1, _$div2 );
     
-    _update( '1' );
-    _build_nav();
+    _update_rounds();
+
+    _update_round( '1' );
   }
 
-  
-  function _build_nav() {
 
-     _.each( _settings.rounds, function( round_pos, index ) {
-  
-       _debug( 'build round_pos ' + round_pos );
-       // _$div1.append( )
-       
-            var $link = $( "<a href='#'>" + round_pos + "</a>" );
-            $link.click( function() {
-               _debug( 'onclick - update round_pos: ' + round_pos );
-               _update( round_pos );
-             });
-            if( index > 0 ) {
-              _$div1.append( " | " );
-            }
-            _$div1.append( $link );
-     });
+  function _update() { }
 
-/*
-    <p>
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '1' ); return false;">1</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '2' ); return false;">2</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '3' ); return false;">3</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '4' ); return false;">4</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '5' ); return false;">5</a> |
-   <a href="#" onclick="sportdb_widget.update( 'euro.2012', '6' ); return false;">6</a>
-</p>
-*/
-  }
-  
-
-  function _update( round_pos )
+  function _update_rounds()
   {
+    _debug( 'update rounds' );
+
+    _api.fetch_rounds( _settings.event, function( json ) {
+    
+      var snippet;
+      
+      if( json.rounds.length >= 16 )
+        snippet = _render_rounds_short( { data: json } );
+      else
+        snippet = _render_rounds_long( { data: json } );
+
+      _$div1.html( snippet );
+
+      // add click funs - assumes links with data-round='3' etc.
+      // - todo/check: is there a better way to add click handlers in templates?
+      _$div1.find( 'a' ).click( function() {
+        _debug( 'click update round' );
+        var $link = $(this);
+        var round = $link.data( 'round' );
+         _debug( 'data-round:' + round );
+         _update_round( round );
+         return false;
+      });
+
+    }); 
+  }
+
+  function _update_round( round_pos )
+  {
+    _debug( 'update round: ' + round_pos );
+
     _api.fetch_round( _settings.event, round_pos, function( json ) {
     
       var snippet = _render_round( { data: json } );
@@ -164,6 +206,7 @@ var sportdb_widget_new = function( id, opts ) {
 // wrapper for jquery plugin
 
 function register_jquery_fn_football( $ ) {
+   // 'use strict';
 
     function debug( msg ) {
       if( window.console && window.console.log ) {

@@ -4,6 +4,8 @@
 
 var sportdb_api_new = function( opts )
 {
+  // 'use strict';
+
   var _defaults = {
                 apiPathPrefix: 'http://footballdb.herokuapp.com/api/v1'
               };
@@ -22,9 +24,15 @@ var sportdb_api_new = function( opts )
     _debug( 'apiPathPrefix: ' + _settings.apiPathPrefix );
   }
 
+  function _fetch_rounds( event_key, onsuccess )
+  {
+    var api_url = _settings.apiPathPrefix + '/event/' + event_key + '/rounds?callback=?';
+    $.getJSON( api_url, onsuccess );
+  }
+
   function _fetch_round( event_key, round_pos, onsuccess )
   {
-    var api_url = _settings.apiPathPrefix + '/event/' + event_key + '/round/' + round_pos + '?callback=?'; 
+    var api_url = _settings.apiPathPrefix + '/event/' + event_key + '/round/' + round_pos + '?callback=?';
     $.getJSON( api_url, onsuccess );
   }
 
@@ -33,7 +41,8 @@ var sportdb_api_new = function( opts )
 
   // return/export public api
   return {
-     fetch_round: _fetch_round
+     fetch_round:  _fetch_round,
+     fetch_rounds: _fetch_rounds
   }
 } // fn sportdb_api_new
 
