@@ -1,12 +1,20 @@
 {
   "name": "football",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "title": "football.js",
   "description": "Football (soccer) widget - matchday, today's rounds, team of the day, etc.",
   "keywords": [
     "football",
+    "footballdb",
+    "sportdb",
     "widget",
-    "soccer"
+    "soccer",
+    "json",
+    "jsonp",
+    "worldcup",
+    "euro",
+    "championsleague",
+    "bundesliga"
   ],
   "author": {
     "name": "Gerald Bauer",
@@ -19,9 +27,9 @@
     }
   ],
   "dependencies": {
-    "jquery": ">=1.10"
+    "jquery": ">=2.0",
+    "underscore": ">=1.4"
   },
   "homepage": "https://github.com/geraldb/football.js",
-  "docs": "https://github.com/geraldb/football.js",
-  "download": "http://code.jquery.com/#football"
+  "docs": "https://github.com/geraldb/football.js"
 }
