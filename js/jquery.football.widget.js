@@ -1,6 +1,6 @@
 
 
-var sportdb_widget_new = function( id, opts ) {
+var football_widget_new = function( id, opts ) {
   // 'use strict';
 
   var _$el;
@@ -15,13 +15,6 @@ var sportdb_widget_new = function( id, opts ) {
                 tplId: null
               };
   var _settings;
-
-
-  function _debug( msg ) {
-      if( window.console && window.console.log ) {
-        window.console.log( '[debug] '+msg );
-      }
-    }
 
   var _def_tpl_rounds_long = "" +
 "    <% _.each( data.rounds, function( round, index ) { %>" +
@@ -97,17 +90,17 @@ var sportdb_widget_new = function( id, opts ) {
   function _init( id, opts )
   {
      if( typeof id === 'string' ) {
-       _debug( 'sportdb_widget_new id: ' + id );
+       debug( 'football_widget_new id: ' + id );
      }
      else
      {
-       _debug( 'sportdb_widget_new w/ el' );
+       debug( 'football_widget_new w/ el' );
      }
     
      _settings = _.extend( {}, _defaults, opts );
 
-     _debug( 'tplId: ' + _settings.tplId );
-     _debug( 'apiPathPrefix: ' + _settings.apiPathPrefix );
+     debug( 'tplId: ' + _settings.tplId );
+     debug( 'apiPathPrefix: ' + _settings.apiPathPrefix );
     
      // pass along api opts if available
      var api_opts = {};
@@ -115,7 +108,7 @@ var sportdb_widget_new = function( id, opts ) {
        api_opts.apiPathPrefix = _settings.apiPathPrefix;
      }
     
-     _api = sportdb_api_new( api_opts );
+     _api = football_api_new( api_opts );
     
      
      var tpl_str = '';
@@ -136,9 +129,11 @@ var sportdb_widget_new = function( id, opts ) {
 
 
     _$el  = $( id );
+    _$el.addClass( 'football-widget' );  // for styling add always .football-widget class
     
     _$div1 = $( '<div />' );
     _$div2 = $( '<div />' );
+    
     _$el.append(  _$div1, _$div2 );
     
     _update_rounds();
@@ -151,7 +146,7 @@ var sportdb_widget_new = function( id, opts ) {
 
   function _update_rounds()
   {
-    _debug( 'update rounds' );
+    debug( 'update rounds' );
 
     _api.fetch_rounds( _settings.event, function( json ) {
     
@@ -167,10 +162,10 @@ var sportdb_widget_new = function( id, opts ) {
       // add click funs - assumes links with data-round='3' etc.
       // - todo/check: is there a better way to add click handlers in templates?
       _$div1.find( 'a' ).click( function() {
-        _debug( 'click update round' );
+        debug( 'click update round' );
         var $link = $(this);
         var round = $link.data( 'round' );
-         _debug( 'data-round:' + round );
+         debug( 'data-round:' + round );
          _update_round( round );
          return false;
       });
@@ -180,7 +175,7 @@ var sportdb_widget_new = function( id, opts ) {
 
   function _update_round( round_pos )
   {
-    _debug( 'update round: ' + round_pos );
+    debug( 'update round: ' + round_pos );
 
     _api.fetch_round( _settings.event, round_pos, function( json ) {
     
@@ -197,45 +192,4 @@ var sportdb_widget_new = function( id, opts ) {
   return {
      update: _update
   }
-} // fn sportdb_widget_new
-
-
-
-
-////////////////////
-// wrapper for jquery plugin
-
-function register_jquery_fn_football( $ ) {
-   // 'use strict';
-
-    function debug( msg ) {
-      if( window.console && window.console.log ) {
-        window.console.log( '[debug] '+msg );
-      }
-    }
-
-    debug( 'before add jquery fn football' );
-
-    function setup_sportdb_widget( el, opts ) {
-      debug( 'hello from setup_sportdb_widget' );
-      var sportdb_widget = sportdb_widget_new( el, opts );
-      var $el = $(el);
-      
-      $el.data( 'widget', sportdb_widget );
-
-      return el;
-    }
-
-    $.fn.football = function( opts ) {
-        debug( 'calling football' );
-        return this.each( function( index, el ) {
-          debug( 'before setup_sportdb_widget['+ index +']' );
-          setup_sportdb_widget( el, opts );
-          debug( 'after setup_sportdb_widget['+ index +']' );
-        });
-    };
-
-    debug( 'after add jquery fn football' );
-}
-
-register_jquery_fn_football( jQuery );
+} // fn football_widget_new

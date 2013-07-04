@@ -2,7 +2,7 @@
 ////////////////////////////////////
 // football.db api wrapper
 
-var sportdb_api_new = function( opts )
+var football_api_new = function( opts )
 {
   // 'use strict';
 
@@ -11,17 +11,12 @@ var sportdb_api_new = function( opts )
               };
   var _settings;
 
-  function _debug( msg ) {
-      if( window.console && window.console.log ) {
-        window.console.log( '[debug] '+msg );
-      }
-    }
 
   function _init( opts )
   {
     _settings = _.extend( {}, _defaults, opts );
     
-    _debug( 'apiPathPrefix: ' + _settings.apiPathPrefix );
+    debug( 'apiPathPrefix: ' + _settings.apiPathPrefix );
   }
 
   function _fetch_rounds( event_key, onsuccess )
@@ -44,5 +39,5 @@ var sportdb_api_new = function( opts )
      fetch_round:  _fetch_round,
      fetch_rounds: _fetch_rounds
   }
-} // fn sportdb_api_new
+} // fn football_api_new
 

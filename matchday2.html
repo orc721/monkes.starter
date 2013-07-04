@@ -2,22 +2,23 @@
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>Matchday Example / sport.db JSON(P) API</title>
+  <title>Matchday Example / football.db JSON(P) API</title>
   
   <script src='js/libs/jquery-2.0.2.min.js'></script>
   <script src='js/libs/underscore-1.4.4.min.js'></script>
   
+  <script src='js/jquery.utils.js'></script>
   <script src='js/jquery.football.api.js'></script>
   <script src='js/jquery.football.widget.js'></script>
 
   <style>
     
-    .widget a {
+    .football-widget a {
       color: black;
       text-decoration: none;
     }
     
-    .widget {
+    .football-widget {
        border: 1px solid green;
        padding: 4px;
        margin: 12px;
@@ -27,8 +28,8 @@
   <script>
     $(document).ready( function() {
       
-       sportdb_widget_new( '#de',{ event: 'de.2012_13',
-                                   tplId: '#deTpl'} );
+       football_widget_new( '#de',{ event: 'de.2012_13',
+                                    tplId: '#deTpl'} );
 
     });
   </script>
@@ -76,9 +77,9 @@
 
 
 
-<h1>Matchday Example / sport.db JSON(P) API</h1>
+<h1>Matchday Example / football.db JSON(P) API</h1>
 
-<div id='de' class='widget'></div>
+<div id='de'></div>
 
 </body>
 </html>
