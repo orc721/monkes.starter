@@ -1,12 +1,21 @@
 ////////////////////
 // wrapper for jquery plugin
 
-function register_jquery_fn_football( $ ) {
+define( function(require) {
+
+               require( 'utils' );
+  var Widget = require( 'football/widget' );
+  // todo: check - use Football.Api or Football.Service  why? why not??
+
+
+  function register_jquery_fn_football( $ ) {
    // 'use strict';
 
+    debug( 'register jquery fn football' );
+
     function setup_football_widget( el, opts ) {
-      var football_widget = football_widget_new( el, opts );
-      
+      var football_widget = Widget.create( el, opts );
+
       $(el).data( 'widget', football_widget );
 
       return el;
@@ -19,6 +28,8 @@ function register_jquery_fn_football( $ ) {
           debug( 'after setup_football_widget['+ index +']' );
         });
     };
-}
+  }
 
-register_jquery_fn_football( jQuery );
+  register_jquery_fn_football( jQuery );
+
+}); // end define

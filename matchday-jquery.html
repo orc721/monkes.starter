@@ -33,12 +33,11 @@
       baseUrl: 'js'
     });
 
-    require( ['football/widget'], function(Widget) {
+    require( ['football/plugin'], function() {
 
       $(document).ready( function() {
 
-        Widget.create( '#euro', { event: 'euro.2012' } );
-        Widget.create( '#at',   { event: 'at.2013_14' } );
+        $( '#confed' ).football( { event: 'world.conf.2013' } );
 
       });
 
@@ -52,11 +51,7 @@
 
 <h1>Matchday Example / football.db JSON(P) API</h1>
 
-<div id='euro'></div>
-
-<!-- try another widget -->
-
-<div id='at'></div>
+<div id='confed'></div>
 
 </body>
 </html>

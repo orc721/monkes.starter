@@ -1,5 +1,6 @@
+define( function(require) {
 
-///////////////////////////
+//////////////////////////////////////////
 // debug utils
 
 function debug( msg ) {
@@ -55,3 +56,12 @@ function fmt_date( date ) {
          date.getFullYear();
 }
 
+//////////////////////////////////////////
+// exports (global functions)
+
+   debug( 'export utils globals (that is, attach functions to window obj)' );
+   window.debug    = debug;
+   window.cmp_date = cmp_date;
+   window.fmt_date = fmt_date;
+
+}); // end define

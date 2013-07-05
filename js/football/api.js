@@ -1,8 +1,13 @@
-
 ////////////////////////////////////
 // football.db api wrapper
 
-var football_api_new = function( opts )
+define( function(require) {
+
+  require( 'utils' );
+  
+  var Api = {};
+
+Api.create = function( opts )
 {
   // 'use strict';
 
@@ -39,5 +44,8 @@ var football_api_new = function( opts )
      fetch_round:  _fetch_round,
      fetch_rounds: _fetch_rounds
   }
-} // fn football_api_new
+} // end fn Api.create
 
+  return Api;
+
+}); // end define

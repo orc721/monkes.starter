@@ -6,10 +6,7 @@
   
   <script src='js/libs/jquery-2.0.2.min.js'></script>
   <script src='js/libs/underscore-1.4.4.min.js'></script>
-  
-  <script src='js/jquery.utils.js'></script>
-  <script src='js/jquery.football.api.js'></script>
-  <script src='js/jquery.football.widget.js'></script>
+  <script src='js/libs/require-2.1.6.js'></script>
 
   <style>
     
@@ -45,14 +42,21 @@
   </style>
 
   <script>
-    $(document).ready( function() {
-      
-       football_widget_new( '#de',{ event: 'de.2012_13',
-                                    tplId: '#deTpl'} );
-
+    require.config( {
+      baseUrl: 'js'
     });
-  </script>
 
+    require( ['football/widget'], function(Widget) {
+
+      $(document).ready( function() {
+
+        Widget.create( '#de',{ event: 'de.2012_13', tplId: '#deTpl'} );
+
+      });
+
+    }); // fn require
+  </script>
+  
 </head>
 <body>
 

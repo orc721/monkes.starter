@@ -1,6 +1,12 @@
+define( function(require) {
 
+            require( 'utils' );
+  var Api = require( 'football/api' );
+  // todo: check - use Football.Api or Football.Service  why? why not??
 
-var football_widget_new = function( id, opts ) {
+  var Widget = {};
+
+Widget.create = function( id, opts ) {
   // 'use strict';
 
   var _$el;
@@ -108,8 +114,7 @@ var football_widget_new = function( id, opts ) {
        api_opts.apiPathPrefix = _settings.apiPathPrefix;
      }
     
-     _api = football_api_new( api_opts );
-    
+     _api = Api.create( api_opts );
      
      var tpl_str = '';
 
@@ -198,4 +203,8 @@ var football_widget_new = function( id, opts ) {
   return {
      update: _update
   }
-} // fn football_widget_new
+} // end fn Widget.create
+
+  return Widget;
+
+}); // end define
