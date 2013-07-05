@@ -7,7 +7,7 @@ Football widgets in JavaScript using the [football.db HTTP JSON(P) API](http://f
     <div id='euro'></div>
         
     <script>
-      football_widget_new( '#euro', { event: 'euro.2012' } );
+      Widget.create( '#euro', { event: 'euro.2012' } );
     </script>
 
 or as a jQuery plugin
