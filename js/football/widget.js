@@ -1,13 +1,18 @@
 define( function(require) {
+ 'use strict';
 
             require( 'utils' );
   var Api = require( 'football/api' );
   // todo: check - use Football.Api or Football.Service  why? why not??
 
+  var tpl_event        = require( 'text!../../templates/event.html' );
+  var tpl_rounds_long  = require( 'text!../../templates/rounds-long.html' );
+  var tpl_rounds_short = require( 'text!../../templates/rounds-short.html' );
+  var tpl_games        = require( 'text!../../templates/games.html' );
+
   var Widget = {};
 
 Widget.create = function( id, opts ) {
-  // 'use strict';
 
   var _$el;
   var _$div_event;    // used for event header 
@@ -27,80 +32,11 @@ Widget.create = function( id, opts ) {
   var _settings;
 
 
-  var _tpl_event = "" +
-"<h3>" +
-" <%= data.event.title %>" +
-"   -  " +
-" <%= data.round.title %>" +
-"</h3>" +
-"";
+  var _tpl_event        = tpl_event;
+  var _tpl_rounds_long  = tpl_rounds_long;
+  var _tpl_rounds_short = tpl_rounds_short;
+  var _tpl_games        = tpl_games;
 
-
-  var _tpl_rounds_long = "" +
-"    <% _.each( data.rounds, function( round, index ) { %>" +
-"" +
-"      <%  if( index > 0 ) { %>" +
-"        |" +
-"      <% } %>" +
-"" +
-"      <a href='#' data-round='<%= round.pos %>'>" +
-"        <%= round.title %>" +
-"      </a>" +
-"" +
-"    <% }); %>" +
-"";
-
-
-  var _tpl_rounds_short = "" +
-"    <% _.each( data.rounds, function( round, index ) { %>" +
-"" +
-"      <%  if( data.rounds.length/2 === index ) { %>" +
-"         <br>" +
-"      <% } else {" +
-"            if( index > 0 ) { %>" +
-"             |" +
-"      <% }} %>" +
-"" +
-"      <a href='#' data-round='<%= round.pos %>'>" +
-"        <%= round.pos %>" +
-"      </a>" +
-"" +
-"    <% }); %>" +
-"";
-
-  var _tpl_games = "" +
-"<table>" +
-" <% _.each( data.games, function( game, index ) { %>" +
-"   <tr>" +
-"     <td>" +
-"      <%= game.play_at %>" +
-"     </td>" +
-"     <td style='text-align: right;'>" +
-"       <%= game.team1_title %> (<%= game.team1_code %>)" +
-"     </td>" +
-"" +
-"     <td>" +
-"      <% if( game.score1 != null && game.score2 != null ) { %>" +
-"        <% if( game.score1ot != null && game.score2ot != null ) { %>" +
-"          <% if ( game.score1p != null && game.score2p != null ) { %>" +
-"             <%= game.score1p %> - <%= game.score2p %> iE / " +
-"          <% } %>" +
-"           <%= game.score1ot %> - <%= game.score2ot %> nV / " +
-"        <% } %>" +
-"        <%= game.score1 %> - <%= game.score2 %>" +
-"      <% } else { %>" +
-"        - " +
-"      <% } %>" +
-"     </td>" +
-"     <td>" +
-"      <%= game.team2_title %> (<%= game.team2_code %>)" +
-"     </td>" +
-"   </tr>" +
-"  <% }); %>" +
-"</table>";
-  
-  
-  
   function _init( id, opts )
   {
      _settings = _.extend( {}, _defaults, opts );
@@ -181,11 +117,11 @@ Widget.create = function( id, opts ) {
     }); 
   }
 
-  function _update_round( round_pos )
+  function _update_round( round )
   {
-    debug( 'update round: ' + round_pos );
+    debug( 'update round: ' + round );
 
-    _api.fetch_round( _settings.event, round_pos, function( json ) {
+    _api.fetch_round( _settings.event, round, function( json ) {
     
       var snippet = _render_games( { data: json } );
       _$div_games.html( snippet );

@@ -20,6 +20,16 @@ or as a jQuery plugin
 
 That's it.
 
+## Chrome Dev Tips
+
+Tip: If you use Chrome allow local file access (for loading the builtin templates) while you test or develop
+by adding the flag `--allow-file-access-from-files`.
+Otherwise you will get a cross-domain security error when loading the builtin templates.
+Example:
+
+    <path>/chrome.exe --allow-file-access-from-files
+
+
 ## License
 
 The `football.js` scripts are dedicated to the public domain.

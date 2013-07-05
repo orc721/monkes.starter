@@ -1,0 +1,16 @@
+
+<% _.each( data.rounds, function( round, index ) { %>
+
+ <%  if( data.rounds.length/2 === index ) { %>
+        <br>
+ <% } else {
+       if( index > 0 ) {
+  %>
+   |
+ <% }} %>
+ 
+ <a href='#' data-round='<%= round.pos %>'>
+   <%= round.pos %>
+ </a>
+
+<% }); %>
