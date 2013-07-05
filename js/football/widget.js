@@ -92,14 +92,14 @@ Widget.create = function( id, opts ) {
   {
     debug( 'update rounds' );
 
-    _api.fetch_rounds( _settings.event, function( json ) {
+    _api.fetch_rounds( _settings.event, function( data ) {
     
       var snippet;
       
-      if( json.rounds.length >= 16 )
-        snippet = _render_rounds_short( { data: json } );
+      if( data.rounds.length >= 16 )
+        snippet = _render_rounds_short( { rounds: data.rounds } );
       else
-        snippet = _render_rounds_long( { data: json } );
+        snippet = _render_rounds_long( { rounds: data.rounds } );
 
       _$div_rounds.html( snippet );
 
@@ -121,12 +121,12 @@ Widget.create = function( id, opts ) {
   {
     debug( 'update round: ' + round );
 
-    _api.fetch_round( _settings.event, round, function( json ) {
+    _api.fetch_round( _settings.event, round, function( data ) {
     
-      var snippet = _render_games( { data: json } );
+      var snippet = _render_games( { games: data.games } );
       _$div_games.html( snippet );
-      
-      var snippet2 = _render_event( { data: json } );
+
+      var snippet2 = _render_event( { event: data.event, round: data.round } );
       _$div_event.html( snippet2 );
 
     }); 

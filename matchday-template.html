@@ -63,7 +63,7 @@
 <script type='text/template' id='deTpl'>
 <table>
  <%  var last_play_at =  new Date( 1970, 1, 1 );
-     _.each( data.games, function( game, index ) {
+     _.each( games, function( game, index ) {
         var play_at = new Date( game.play_at );
         if( cmp_date( last_play_at, play_at ) !== 0 )  {
           last_play_at = play_at;
