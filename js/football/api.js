@@ -41,13 +41,20 @@ Api.create = function( opts )
     fetch( '/event/' + event + '/round/' + round, onsuccess );
   }
 
+  function fetchRoundsToday( onsuccess )
+  {
+    // fetch( '/rounds/2013.6.30', onsuccess );
+    fetch( '/rounds/today', onsuccess );
+  }
+
   // call "c'tor/constructor"
   init( opts );
 
   // return/export public api
   return {
-     fetchRound:  fetchRound,
-     fetchRounds: fetchRounds
+     fetchRound:        fetchRound,
+     fetchRounds:       fetchRounds,
+     fetchRoundsToday:  fetchRoundsToday
   }
 } // end fn Api.create
 

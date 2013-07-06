@@ -39,7 +39,12 @@
 
         Widget.create( '#euro', { event: 'euro.2012' } );
         Widget.create( '#at',   { event: 'at.2013_14' } );
-
+        
+        // option 2) show today's round or the last or the next
+        Widget.create( '#de',   { event: 'de.2013_14', showRounds: false } );
+        
+        // option 3) widget with no event => show scheduled rounds for today (for all events)
+        Widget.create( '#rounds' );
       });
 
     }); // fn require
@@ -57,6 +62,15 @@
 <!-- try another widget -->
 
 <div id='at'></div>
+
+<!-- try another widget -->
+
+<div id='de'></div>
+
+<!-- try another widget -->
+
+<p>Any rounds scheduled today?</p>
+<div id='rounds'></div>
 
 </body>
 </html>

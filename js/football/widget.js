@@ -8,12 +8,14 @@ define( function(require) {
   var eventTpl        = require( 'text!../../templates/event.html' ),
       roundsLongTpl   = require( 'text!../../templates/rounds-long.html' ),
       roundsShortTpl  = require( 'text!../../templates/rounds-short.html' ),
-      gamesTpl        = require( 'text!../../templates/games.html' );
+      gamesTpl        = require( 'text!../../templates/games.html' ),
+      roundsTodayTpl  = require( 'text!../../templates/rounds-today.html');
 
   var renderEventDef       = _.template( eventTpl ),
       renderRoundsLongDef  = _.template( roundsLongTpl ),
       renderRoundsShortDef = _.template( roundsShortTpl ),
-      renderGamesDef       = _.template( gamesTpl );
+      renderGamesDef       = _.template( gamesTpl ),
+      renderRoundsTodayDef = _.template( roundsTodayTpl );
 
   var Widget = {};
 
@@ -27,12 +29,14 @@ Widget.create = function( id, opts ) {
   var renderEvent,    // compiled underscore templates - nb: a compiled template is just a js function
       renderRoundsLong,
       renderRoundsShort,
-      renderGames;
+      renderGames,
+      renderRoundsToday;
 
   var api;
 
   var defaults = {
-                   tplId: null
+                   tplId: null,
+                   showRounds: true
                  };
   var settings;
 
@@ -41,8 +45,10 @@ Widget.create = function( id, opts ) {
   {
      settings = _.extend( {}, defaults, opts );
 
-     debug( 'tplId: ' + settings.tplId );
-     debug( 'event: ' + settings.event );
+     debug( 'tplId: '      + settings.tplId );
+     debug( 'event: '      + settings.event );
+     debug( 'showRounds: ' + settings.showRounds );
+
      debug( 'api: '   + (settings.api !== undefined) );
 
      if( settings.api === undefined || settings.api === null )
@@ -60,23 +66,50 @@ Widget.create = function( id, opts ) {
      renderEvent       = renderEventDef;
      renderRoundsShort = renderRoundsShortDef;
      renderRoundsLong  = renderRoundsLongDef;
+     renderRoundsToday = renderRoundsTodayDef;
 
      $el  = $( id );
      $el.addClass( 'football-widget' );  // for styling add always .football-widget class
-    
+
      $event  = $( '<div />' ).addClass( 'event' );
      $rounds = $( '<div />' ).addClass( 'rounds' );
      $games  = $( '<div />' ).addClass( 'games' );
     
      $el.append( $event, $rounds, $games );
-    
-     updateRounds();
 
-     updateRound( '1' );
+    if( settings.event === undefined || settings.event === null ) {
+       // no event specified; display todays rounds
+       updateRoundsToday();
+    }
+    else {
+     if( settings.showRounds ) {
+        updateRounds();
+        updateRound( '1' );
+     }
+     else {
+        updateRound( 'today' );
+     }
+    }
   }
 
 
   function update() { }
+
+
+  function updateRoundsToday()
+  {
+    debug( 'update rounds for today' );
+    api.fetchRoundsToday( function( data ) {
+         var snippet;
+
+         if( data.rounds.length === 0 )
+            snippet = "<p>No rounds scheduled today!</p>";
+         else 
+            snippet = renderRoundsToday( { rounds: data.rounds } );
+
+         $rounds.html( snippet );
+    });
+  }
 
   function updateRounds()
   {
