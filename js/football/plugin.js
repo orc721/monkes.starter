@@ -2,34 +2,35 @@
 // wrapper for jquery plugin
 
 define( function(require) {
+  // 'use strict';
 
                require( 'utils' );
   var Widget = require( 'football/widget' );
   // todo: check - use Football.Api or Football.Service  why? why not??
 
 
-  function register_jquery_fn_football( $ ) {
-   // 'use strict';
+  function registerFn( $ ) {
 
     debug( 'register jquery fn football' );
 
-    function setup_football_widget( el, opts ) {
-      var football_widget = Widget.create( el, opts );
+    function setupFootballWidget( el, opts ) {
+      var w = Widget.create( el, opts );
 
-      $(el).data( 'widget', football_widget );
+      // todo: use a common name control,ctrl,widget or similar for all?
+      $(el).data( 'widget', w );
 
       return el;
     }
 
     $.fn.football = function( opts ) {
         return this.each( function( index, el ) {
-          debug( 'before setup_football_widget['+ index +']' );
-          setup_football_widget( el, opts );
-          debug( 'after setup_football_widget['+ index +']' );
+          debug( 'before setupFootballWidget['+ index +']' );
+          setupFootballWidget( el, opts );
+          debug( 'after setupFootballWidget['+ index +']' );
         });
     };
   }
 
-  register_jquery_fn_football( jQuery );
+  registerFn( jQuery );
 
 }); // end define

@@ -3,11 +3,20 @@ define( function(require) {
 //////////////////////////////////////////
 // debug utils
 
-function debug( msg ) {
-  if( window.console && window.console.log ) {
-      window.console.log( '[debug] '+msg );
-  }
+function puts( msg ) {
+  if( window.console && window.console.log )
+      window.console.log( msg );
 }
+
+function pp( obj ) {
+  if( window.console && window.console.dir )
+      window.console.dir( obj );
+}
+
+function debug( msg ) {
+  puts( '[debug] '+msg );
+}
+
 
 ////////////////////////////
 // date utils
@@ -59,9 +68,13 @@ function fmt_date( date ) {
 //////////////////////////////////////////
 // exports (global functions)
 
-   debug( 'export utils globals (that is, attach functions to window obj)' );
-   window.debug    = debug;
-   window.cmp_date = cmp_date;
-   window.fmt_date = fmt_date;
+   debug( 'export utils globals (that is, attach functions to global obj)' );
+
+   // NB: assumes this is global object e.g. window
+   this.puts     = puts;
+   this.pp       = pp;
+   this.debug    = debug;
+   this.cmp_date = cmp_date;
+   this.fmt_date = fmt_date;
 
 }); // end define
