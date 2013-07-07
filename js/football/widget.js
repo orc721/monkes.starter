@@ -8,14 +8,12 @@ define( function(require) {
   var eventTpl        = require( 'text!football/templates/event.html' ),
       roundsLongTpl   = require( 'text!football/templates/rounds-long.html' ),
       roundsShortTpl  = require( 'text!football/templates/rounds-short.html' ),
-      gamesTpl        = require( 'text!football/templates/games.html' ),
-      roundsTodayTpl  = require( 'text!football/templates/rounds-today.html');
+      gamesTpl        = require( 'text!football/templates/games.html' );
 
   var renderEventDef       = _.template( eventTpl ),
       renderRoundsLongDef  = _.template( roundsLongTpl ),
       renderRoundsShortDef = _.template( roundsShortTpl ),
-      renderGamesDef       = _.template( gamesTpl ),
-      renderRoundsTodayDef = _.template( roundsTodayTpl );
+      renderGamesDef       = _.template( gamesTpl );
 
   var Widget = {};
 
@@ -29,8 +27,7 @@ Widget.create = function( id, opts ) {
   var renderEvent,    // compiled underscore templates - nb: a compiled template is just a js function
       renderRoundsLong,
       renderRoundsShort,
-      renderGames,
-      renderRoundsToday;
+      renderGames;
 
   var api;
 
@@ -66,7 +63,6 @@ Widget.create = function( id, opts ) {
      renderEvent       = renderEventDef;
      renderRoundsShort = renderRoundsShortDef;
      renderRoundsLong  = renderRoundsLongDef;
-     renderRoundsToday = renderRoundsTodayDef;
 
      $el  = $( id );
      $el.addClass( 'football-widget' );  // for styling add always .football-widget class
@@ -77,11 +73,6 @@ Widget.create = function( id, opts ) {
     
      $el.append( $event, $rounds, $games );
 
-    if( settings.event === undefined || settings.event === null ) {
-       // no event specified; display todays rounds
-       updateRoundsToday();
-    }
-    else {
      if( settings.showRounds ) {
         updateRounds();
         updateRound( '1' );
@@ -89,27 +80,11 @@ Widget.create = function( id, opts ) {
      else {
         updateRound( 'today' );
      }
-    }
   }
 
 
   function update() { }
 
-
-  function updateRoundsToday()
-  {
-    debug( 'update rounds for today' );
-    api.fetchRoundsToday( function( data ) {
-         var snippet;
-
-         if( data.rounds.length === 0 )
-            snippet = "<p>No rounds scheduled today!</p>";
-         else 
-            snippet = renderRoundsToday( { rounds: data.rounds } );
-
-         $rounds.html( snippet );
-    });
-  }
 
   function updateRounds()
   {
@@ -119,7 +94,8 @@ Widget.create = function( id, opts ) {
     
       var snippet;
       
-      if( data.rounds.length >= 16 )
+      // e.g. world cup has 20 rounds; lets still use long format for world cup
+      if( data.rounds.length > 20 )
         snippet = renderRoundsShort( { rounds: data.rounds } );
       else
         snippet = renderRoundsLong( { rounds: data.rounds } );
