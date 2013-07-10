@@ -2,6 +2,12 @@
 
 Football widgets in JavaScript using the [football.db HTTP JSON(P) API](http://footballdb.herokuapp.com/api)
 
+## Live Demo
+
+Try the Football widget running
+on GitHub Pages [`geraldb.github.io/football.js/matchday.html`](http://geraldb.github.io/football.js/matchday.html).
+
+
 ## Usage Example
 
     <div id='euro'></div>
