@@ -3,13 +3,12 @@
 <head>
   <meta charset='UTF-8'>
   <title>Matchday Example / football.db JSON(P) API</title>
-  
-  <script src='js/libs/jquery-2.0.2.min.js'></script>
-  <script src='js/libs/underscore-1.4.4.min.js'></script>
-  <script src='js/libs/require-2.1.6.js'></script>
+
+  <script src='js/libs/jquery-2.1.0.min.js'></script>
+  <script src='js/libs/underscore-1.6.0.min.js'></script>
+  <script src='js/libs/require-2.1.11.min.js'></script>
   
   <style>
-    
     .football-widget a
     {
       color: black;
@@ -25,13 +24,12 @@
     .football-widget .rounds {
       margin-bottom: 10px;
     }
-    
   </style>
 
   <script>
     require.config( {
       paths: {
-        'text': 'libs/require-text-2.0.7'   // require.js text plugin
+        'text': 'libs/require-text-2.0.10'   // require.js text plugin
       },
       baseUrl: 'js'
     });
@@ -40,7 +38,7 @@
 
       $(document).ready( function() {
 
-        $( '#confed' ).football( { event: 'world.conf.2013' } );
+        $( '#world' ).football( { event: 'world.2014' } );
 
       });
 
@@ -54,7 +52,7 @@
 
 <h1>Matchday Example / football.db JSON(P) API</h1>
 
-<div id='confed'></div>
+<div id='world'></div>
 
 </body>
 </html>
