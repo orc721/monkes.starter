@@ -10,21 +10,22 @@ on GitHub Pages [`geraldb.github.io/football.js/matchday.html`](http://geraldb.g
 
 ## Usage Example
 
-    <div id='euro'></div>
+    <div id='world'></div>
         
     <script>
-      Widget.create( '#euro', { event: 'euro.2012' } );
+      Widget.create( '#world', { event: 'world.2014' } );
     </script>
 
 or as a jQuery plugin
 
-    <div id='confed'></div>
+    <div id='world'></div>
     
     <script>
-      $( '#confed' ).football( { event: 'world.confed.2013' } );
+      $( '#world' ).football( { event: 'world.2014' } );
     </script>
 
 That's it.
+
 
 ## Chrome Dev Tips
 
