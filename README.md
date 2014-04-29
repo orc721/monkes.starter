@@ -1,6 +1,6 @@
 # football.js
 
-Football widgets in JavaScript using the [football.db HTTP JSON(P) API](http://footballdb.herokuapp.com/api)
+Football widgets in JavaScript using the [football.db HTTP JSON(P) API](https://github.com/openfootball/api)
 
 ## Live Demo
 
