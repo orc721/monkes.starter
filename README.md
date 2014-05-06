@@ -5,7 +5,7 @@ Football widgets in JavaScript using the [football.db HTTP JSON(P) API](https://
 ## Live Demo
 
 Try the Football widget running
-on GitHub Pages [`geraldb.github.io/football.js/matchday.html`](http://geraldb.github.io/football.js/matchday.html).
+on GitHub Pages [`footballjs.github.io/football.js/matchday.html`](http://footballjs.github.io/football.js/matchday.html).
 
 
 ## Usage Example

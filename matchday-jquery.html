@@ -4,9 +4,9 @@
   <meta charset='UTF-8'>
   <title>Matchday Example / football.db JSON(P) API</title>
 
-  <script src='js/libs/jquery-2.1.0.min.js'></script>
-  <script src='js/libs/underscore-1.6.0.min.js'></script>
-  <script src='js/libs/require-2.1.11.min.js'></script>
+  <script src='bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='bower_components/underscore/underscore.js'></script>
+  <script src='bower_components/requirejs/require.js'></script>
   
   <style>
     .football-widget a
@@ -29,12 +29,13 @@
   <script>
     require.config( {
       paths: {
-        'text': 'libs/require-text-2.0.10'   // require.js text plugin
+        // 'text': 'libs/require-text-2.0.10'   // require.js text plugin
+        'text': '../bower_components/requirejs-text/text'   // require.js text plugin
       },
       baseUrl: 'js'
     });
 
-    require( ['football/plugin'], function() {
+    require( ['football.plugin'], function() {
 
       $(document).ready( function() {
 

@@ -2,13 +2,13 @@ define( function(require) {
  'use strict';
 
             require( 'utils' );
-  var Api = require( 'football/api' );
+  var Api = require( 'football.api' );
   // todo: check - use Football.Api or Football.Service  why? why not??
 
-  var eventTpl        = require( 'text!football/templates/event.html' ),
-      roundsLongTpl   = require( 'text!football/templates/rounds-long.html' ),
-      roundsShortTpl  = require( 'text!football/templates/rounds-short.html' ),
-      gamesTpl        = require( 'text!football/templates/games.html' );
+  var eventTpl        = require( 'text!templates/event.html' ),
+      roundsLongTpl   = require( 'text!templates/rounds-long.html' ),
+      roundsShortTpl  = require( 'text!templates/rounds-short.html' ),
+      gamesTpl        = require( 'text!templates/games.html' );
 
   var renderEventDef       = _.template( eventTpl ),
       renderRoundsLongDef  = _.template( roundsLongTpl ),

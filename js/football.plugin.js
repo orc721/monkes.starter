@@ -5,7 +5,7 @@ define( function(require) {
   // 'use strict';
 
                require( 'utils' );
-  var Widget = require( 'football/widget' );
+  var Widget = require( 'football.widget' );
   // todo: check - use Football.Api or Football.Service  why? why not??
 
 
