@@ -8,7 +8,6 @@
     "bower_components",
     "test",
     "tests",
-    "samples",
     "football.jquery.json"
   ],
    "dependencies": {
