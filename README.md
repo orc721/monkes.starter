@@ -11,7 +11,7 @@ Here's everything to make it happen - yes, you can.
 
 ![](preview/spritesheet.png)  
 
-[inscribe №18566375](https://ordinals.com/inscription/f685f68aafb1cd897013fb736f24f247848b71f38e425930b462fda39fdca3f8i0)  by effinhot - thank you!
+[Inscription №18566375](https://ordinals.com/inscription/f685f68aafb1cd897013fb736f24f247848b71f38e425930b462fda39fdca3f8i0)  by effinhot - thank you!
 
 
 
