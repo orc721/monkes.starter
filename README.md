@@ -15,7 +15,7 @@ Here's everything to make it happen - yes, you can.
 
 
 
-#### Step 2:  Inscribe the collection deploy text 
+### Step 2:  Inscribe the collection deploy text 
 
 Note: Fill-in the inscribe / inscription id 
 for the inscribed spritesheet.png above.
@@ -36,7 +36,7 @@ in the [ordgen / ORC-721](https://discord.gg/dDhvHKjm2t) discord (in the #genera
 
 
 
-### Monke Mint Samples
+## Monke Mint Samples
 
 
 To find your g(enerative) numbers in range 0-59 (60) for the mint text - try the [D.I.Y. Monkes Previewer »](https://orc721.github.io/monkes.starter/preview)
