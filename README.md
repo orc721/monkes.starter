@@ -2,7 +2,12 @@
 
 
 
+
+
 ## Questions? Comments?
 
-Please post in the [ordinal punks](https://ordinalpunks.com) discord (in the #generative-orc-721 channel)
-or in the [ordinal phunks](https://twitter.com/OrdinalPhunksV0) discord (in the #random / General channel).
+Join us in the [Ordgen / ORC-721 discord (chat server)](https://discord.gg/dDhvHKjm2t). Yes you can.
+Your questions and commetary welcome.
+
+Or post them over at the [Help & Support](https://github.com/geraldb/help) page. Thanks.
+

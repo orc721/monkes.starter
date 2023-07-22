@@ -1,0 +1,4 @@
+
+exclude:
+- sandbox/
+- LICENSE.md
